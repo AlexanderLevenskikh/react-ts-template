@@ -1,14 +1,12 @@
-import { ColorEnum } from 'shared/constants/colorEnum';
-
 export function proxifyFakeApiRequestsWithLogging<T extends Object>(fakeApiPartInstance: T) {
     let proxifiedAPI = fakeApiPartInstance;
 
     try {
         proxifiedAPI = new Proxy(fakeApiPartInstance, {
             get(target: T, property: string): any {
-                const apiRefStyle = `color: ${ ColorEnum.ORANGE }; margin-left: 50px; font-weight: 600`;
+                const apiRefStyle = `color: orange; margin-left: 50px; font-weight: 600`;
                 const apiMethodStyle = `font-weight: normal`;
-                const apiOptionsStyle = `color: ${ ColorEnum.GRAY }; margin-left: 50px`;
+                const apiOptionsStyle = `color: gray; margin-left: 50px`;
 
                 let method = Reflect.get(target, property);
                 if (!method) {

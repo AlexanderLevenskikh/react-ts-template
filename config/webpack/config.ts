@@ -96,11 +96,11 @@ const webpackConfig = ({ mode, wds }: IWebpackEnv): Configuration => {
             templatePath: path.resolve(webpackContext, 'templates/index.html'),
         }),
         webpackForkTsCheckerPlugin(path.resolve(webpackContext, 'tsconfig.json')),
-        ...(wds ? [ webpackDevServerHMRPlugin() ] : []),
+        ...(wds ? [webpackDevServerHMRPlugin()] : []),
     ];
 
     const resolve = {
-        extensions: [ '.ts', '.tsx', '.js', '.jsx', '.json' ],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
         alias: {
             ...(wds ? { 'react-dom': '@hot-loader/react-dom' } : {}),
             'root': path.resolve(webpackContext, 'src'),
