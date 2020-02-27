@@ -1,10 +1,13 @@
-import {IUserFakeDataEntity} from "root/api/fake/account/entity/user";
-import uuid from "uuid";
+import { IUserFakeDataEntity } from 'root/api/fake/account/entity/user';
+
+export enum FakeUserIds {
+    Admin = '192da156-cb30-46ee-ae3a-463e18f4acf2',
+}
 
 export function createUserFakeDataStorage(): IUserFakeDataEntity[] {
     return [
         {
-            id: uuid.v1(),
+            id: FakeUserIds.Admin,
             email: 'admin@admin.ru',
             displayName: 'admin',
             firstName: 'FirstName',

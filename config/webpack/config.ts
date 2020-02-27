@@ -15,7 +15,6 @@ import { webpackDevServerPart } from './devServer';
 import { webpackContext } from './context';
 import { webpackTSXRule } from './rules/typescriptJSX';
 import { webpackLessRule } from './rules/less';
-import { webpackLessAntdLoader } from './rules/loaders/less-antd/less';
 import { webpackLessAntdRule } from './rules/less-antd';
 
 export enum WebpackModeEnum {

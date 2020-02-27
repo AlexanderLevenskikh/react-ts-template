@@ -2,7 +2,7 @@ import {IUserFakeDataEntity} from "root/api/fake/account/entity/user";
 import {fakeDataStorage} from "root/api/fake/storage";
 import {Nullable} from "root/shared/types/nullable";
 import {NotFoundError} from "root/shared/model/errors/notFoundError";
-import uuid from "uuid";
+import v1 from "uuid/v1";
 
 export class UserFakeDataProvider {
     public static getUsers(): IUserFakeDataEntity[] {
@@ -26,7 +26,7 @@ export class UserFakeDataProvider {
     public static createUser(entity: IUserFakeDataEntity): void {
         fakeDataStorage.user = [
             {
-                id: uuid.v1(),
+                id: v1(),
                 ...entity,
             }
         ];

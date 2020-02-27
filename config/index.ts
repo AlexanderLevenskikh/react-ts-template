@@ -1,9 +1,10 @@
 import fs from 'fs';
 
 let config: IConfig = {
-    isProdApi: true,
+    isProdApi: false,
 };
 
+// TODO разобраться почему это не работает
 if (fs.existsSync('./config.json')) {
     config = require('./config.json');
 }
