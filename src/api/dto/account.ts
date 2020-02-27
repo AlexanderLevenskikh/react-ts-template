@@ -7,6 +7,25 @@ export interface ILoginEventDto {
     rememberMe?: boolean;
 }
 
+export interface IRegistrationEventDto {
+    firstName: string;
+    secondName: string;
+    surname: string;
+    email: string;
+    fullName: string;
+    shortName: string;
+    phone?: string;
+    tin: string;
+    password: string;
+    confirmPassword: string;
+    type: CompanyType;
+}
+
+export enum CompanyType {
+    SellerBuyer = 1,
+    Bank = 2
+}
+
 export interface ISessionInfoDto {
     user: IUserDto;
     tokenResource: ITokenResourceDto;

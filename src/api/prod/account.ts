@@ -1,7 +1,7 @@
 import { httpClient, HttpClientMethod, HttpClientResponseType } from 'root/api/httpClient';
 import { IAccountApi } from 'root/api/interface/account';
 import {
-    ILoginEventDto,
+    ILoginEventDto, IRegistrationEventDto,
     ISendCurrentUserActivationDto,
     ISendUserActivationDto,
     ISessionInfoDto,
@@ -13,6 +13,18 @@ export class AccountApi implements IAccountApi {
         return httpClient({
             controller: '/api/user-account',
             action: 'login',
+            method: HttpClientMethod.POST,
+            request: {
+                body: event,
+            },
+            responseType: HttpClientResponseType.JSON,
+        });
+    }
+
+    register(event: IRegistrationEventDto): Promise<ISessionInfoDto> {
+        return httpClient({
+            controller: '/api/user-account',
+            action: 'register',
             method: HttpClientMethod.POST,
             request: {
                 body: event,

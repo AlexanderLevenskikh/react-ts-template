@@ -1,5 +1,5 @@
 import {
-    ILoginEventDto,
+    ILoginEventDto, IRegistrationEventDto,
     ISendCurrentUserActivationDto,
     ISendUserActivationDto,
     ISessionInfoDto,
@@ -8,6 +8,7 @@ import {
 
 export interface IAccountApi {
     login(event: ILoginEventDto): Promise<ISessionInfoDto>;
+    register(event: IRegistrationEventDto): Promise<ISessionInfoDto>;
     logout(token: string[]): Promise<any>;
     getAccount(): Promise<IUserDto>;
     refreshToken(token: string[]): Promise<ISessionInfoDto>;

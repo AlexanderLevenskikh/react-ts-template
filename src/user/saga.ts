@@ -1,70 +1,39 @@
 import { call, getContext, put, spawn, takeLatest } from 'redux-saga/effects';
 import { IDependencies } from 'root/app/dependencies';
-import { IRegisterUserPayload, IRemoveUserPayload, UserActions, UserActionTypes } from 'root/user/actions';
+import { IRegisterUserPayload, UserActions, UserActionTypes } from 'root/user/actions';
 import { PayloadAction } from 'typesafe-actions';
-import { mapUserRegistrationModelToEvent } from 'root/user/mappers/modelToRegistrationEvent';
 import { message } from 'antd';
+import { mapUserDtoToView } from 'root/user/mappers/userDto';
+import { mapUserRegistrationModelToDto } from 'root/user/mappers/modelToRegistrationEvent';
 
 export function* userSagaArray() {
     yield spawn(watchFetchCurrentUserSaga);
-    yield spawn(watchOpenUsersListModalSaga);
-    yield spawn(watchFetchUsersListSaga);
     yield spawn(watchUserLogoutSaga);
-    yield spawn(watchUserRemoveSaga);
     yield spawn(watchUserRegistrationSaga);
 }
 
 export function* watchFetchCurrentUserSaga() {
-    yield takeLatest(UserActionTypes.FetchCurrentUser, fetchCurrentUserSaga);
+    yield takeLatest(UserActionTypes.GetUser, fetchCurrentUserSaga);
 }
 export function* fetchCurrentUserSaga() {
     try {
-        const { userApi } = (yield getContext('dependencies')) as IDependencies;
-        const user = yield call(userApi.getCurrentUser);
+        const { accountApi } = (yield getContext('dependencies')) as IDependencies;
+        const user = yield call(accountApi.getAccount);
+        const view = mapUserDtoToView(user);
 
-        yield put(UserActions.FetchCurrentUserSucceed({ user }));
+        yield put(UserActions.GetUserSucceed({ view }));
     } catch (error) {
-        yield put(UserActions.FetchCurrentUserFailed({ error }));
+        yield put(UserActions.GetUserFailed({ error }));
     }
-}
-
-
-export function* watchOpenUsersListModalSaga() {
-    yield takeLatest(UserActionTypes.OpenUsersListModal, openUsersListModalSaga);
-}
-export function* openUsersListModalSaga() {
-    yield put(UserActions.FetchUsersList());
-}
-
-export function* watchFetchUsersListSaga() {
-    yield takeLatest(UserActionTypes.FetchUsersList, fetchUsersListSaga);
-}
-export function* fetchUsersListSaga() {
-    try {
-        const { userApi } = (yield getContext('dependencies')) as IDependencies;
-        const users = yield call(userApi.getUsersList);
-
-        yield put(UserActions.FetchUsersListSucceed({ users }));
-    } catch (error) {
-        yield put(UserActions.FetchUsersListFailed({ error }));
-    }
-}
-
-export function* watchUserRemoveSaga() {
-    yield takeLatest(UserActionTypes.RemoveUser, userRemoveSaga);
-}
-export function* userRemoveSaga(action: PayloadAction<string, IRemoveUserPayload>) {
-    const { userApi } = (yield getContext('dependencies')) as IDependencies;
-    yield call(userApi.remove, action.payload.userId);
-    yield put(UserActions.FetchUsersList());
 }
 
 export function* watchUserLogoutSaga() {
     yield takeLatest(UserActionTypes.Logout, userLogoutSaga);
 }
 export function* userLogoutSaga() {
-    const { userApi } = (yield getContext('dependencies')) as IDependencies;
-    yield call(userApi.logout);
+    const { accountApi } = (yield getContext('dependencies')) as IDependencies;
+    // TODO Token
+    yield call(accountApi.logout, [  ]);
 }
 
 export function* watchUserRegistrationSaga() {
@@ -74,13 +43,12 @@ export function* userRegistrationSaga(action: PayloadAction<string, IRegisterUse
     try {
         const { payload: { model } } = action;
 
-        const { userApi } = (yield getContext('dependencies')) as IDependencies;
-        const event = mapUserRegistrationModelToEvent(model);
-        yield call(userApi.register, event);
+        const { accountApi } = (yield getContext('dependencies')) as IDependencies;
+        const event = mapUserRegistrationModelToDto(model);
+        yield call(accountApi.register, event);
 
-        message.success('User successfully registered', 5);
+        message.success('Пользователь зарегистрирован', 5);
         yield put(UserActions.RegisterUserSucceed());
-        yield put(UserActions.CloseUserRegistrationModal());
     } catch (error) {
         yield put(UserActions.RegisterUserFailed({ error }));
     }

@@ -16,6 +16,7 @@ module.exports = function(api) {
                     return `antd/es/${name}`;
                 },
                 "libraryName": "antd",
+                "style": true,
             },
         ],
         "@babel/plugin-proposal-class-properties",

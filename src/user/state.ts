@@ -1,8 +1,11 @@
-import { IUserDto } from 'root/api/dto/account';
-import { Nullable } from 'root/shared/types/nullable';
+import { UserView } from 'root/user/types/user';
 
 export class UserState {
-    user: Nullable<IUserDto> = null;
+    userView: UserView = new UserView();
     userLoading: boolean = false;
     userIsAuthenticated: boolean = false;
+
+    loginProcessing: boolean = false;
+    registrationProcessing: boolean = false;
+    logoutProcessing: boolean = false;
 }

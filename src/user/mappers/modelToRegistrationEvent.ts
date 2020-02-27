@@ -1,13 +1,18 @@
-import { IUserRegistrationModel } from 'root/user/model/registration';
-import { IUserRegistrationEvent } from '../../../../server/src/Services/User/IUserRegistrationEvent';
+import { IUserRegistrationModel } from 'root/user/types/registration';
+import { IRegistrationEventDto } from 'root/api/dto/account';
 
-export function mapUserRegistrationModelToEvent(model: IUserRegistrationModel): IUserRegistrationEvent {
+export function mapUserRegistrationModelToDto(model: IUserRegistrationModel): IRegistrationEventDto {
     return {
-        userName: model.userName.trim(),
+        firstName: model.firstName.trim(),
+        secondName: model.lastName.trim(),
+        surname: model.middleName.trim(),
+        email: model.email.trim(),
+        fullName: model.fullName.trim(),
+        shortName: model.shortName.trim(),
+        phone: model.phoneNumber ? model.phoneNumber.trim() : '',
+        tin: model.inn.trim(),
         password: model.password.trim(),
-        lastName: model.lastName ? model.lastName.trim() : '',
-        middleName: model.middleName ? model.middleName.trim() : '',
-        firstName: model.firstName ? model.firstName.trim() : '',
-        isAdmin: Boolean(model.isAdmin),
+        confirmPassword: model.passwordConfirmation.trim(),
+        type: model.companyType,
     }
 }

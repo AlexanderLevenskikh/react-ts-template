@@ -1,18 +1,15 @@
 import { createAction as csa } from 'typesafe-actions';
 import { IErrorPayload } from 'root/shared/types/actions/errorPayload';
-import { IUserView } from 'DAL/User/IUserView';
-import { IUserRegistrationModel } from 'root/user/model/registration';
+import { IUserRegistrationModel } from 'root/user/types/registration';
+import { IUserLoginModel } from 'root/user/types/login';
+import { UserView } from 'root/user/types/user';
 
-interface IFetchCurrentUserSucceedPayload {
-    user: IUserView;
+export interface IGetUserSuccessPayload {
+    view: UserView;
 }
 
-interface IFetchUsersListSucceedPayload {
-    users: IUserView[];
-}
-
-export interface IRemoveUserPayload {
-    userId: string;
+export interface ILoginUserPayload {
+    model: IUserLoginModel;
 }
 
 export interface IRegisterUserPayload {
@@ -20,37 +17,31 @@ export interface IRegisterUserPayload {
 }
 
 export enum UserActionTypes {
-    FetchCurrentUser = 'users/current/fetch',
-    FetchCurrentUserSucceed = 'users/current/fetch/succeed',
-    FetchCurrentUserFailed = 'users/current/fetch/failed',
-    OpenUsersListModal = 'users/list/modal/open',
-    CloseUsersListModal = 'users/list/modal/close',
-    RemoveUser = 'users/remove',
-    FetchUsersList = 'users/list/fetch',
-    FetchUsersListSucceed = 'users/list/fetch/succeed',
-    FetchUsersListFailed = 'users/list/fetch/failed',
-    OpenUserRegistrationModal = 'users/registration/modal/open',
-    CloseUserRegistrationModal = 'users/registration/modal/close',
-    RegisterUser = 'users/registration',
-    RegisterUserSucceed = 'users/registration/succeed',
-    RegisterUserFailed = 'users/registration/failed',
-    Logout = 'users/logout',
+    GetUser = 'user/get',
+    GetUserSucceed = 'user/get/succeed',
+    GetUserFailed = 'user/get/failed',
+    LoginUser = 'user/login',
+    LoginUserSucceed = 'user/login/succeed',
+    LoginUserFailed = 'user/login/failed',
+    Logout = 'user/logout',
+    LogoutSucceed = 'user/logout/succeed',
+    LogoutFailed = 'user/logout/failed',
+    RegisterUser = 'user/registration',
+    RegisterUserSucceed = 'user/registration/succeed',
+    RegisterUserFailed = 'user/registration/failed',
 }
 
 export const UserActions = {
-    FetchCurrentUser: csa(UserActionTypes.FetchCurrentUser)(),
-    FetchCurrentUserSucceed: csa(UserActionTypes.FetchCurrentUserSucceed)<IFetchCurrentUserSucceedPayload>(),
-    FetchCurrentUserFailed: csa(UserActionTypes.FetchCurrentUserFailed)<IErrorPayload>(),
-    OpenUsersListModal: csa(UserActionTypes.OpenUsersListModal)(),
-    CloseUsersListModal: csa(UserActionTypes.CloseUsersListModal)(),
-    RemoveUser: csa(UserActionTypes.RemoveUser)<IRemoveUserPayload>(),
-    FetchUsersList: csa(UserActionTypes.FetchUsersList)(),
-    FetchUsersListSucceed: csa(UserActionTypes.FetchUsersListSucceed)<IFetchUsersListSucceedPayload>(),
-    FetchUsersListFailed: csa(UserActionTypes.FetchUsersListFailed)<IErrorPayload>(),
-    OpenUserRegistrationModal: csa(UserActionTypes.OpenUserRegistrationModal)(),
-    CloseUserRegistrationModal: csa(UserActionTypes.CloseUserRegistrationModal)(),
+    GetUser: csa(UserActionTypes.GetUser)(),
+    GetUserSucceed: csa(UserActionTypes.GetUserSucceed)<IGetUserSuccessPayload>(),
+    GetUserFailed: csa(UserActionTypes.GetUserFailed)<IErrorPayload>(),
+    LoginUser: csa(UserActionTypes.LoginUser)<ILoginUserPayload>(),
+    LoginUserSucceed: csa(UserActionTypes.LoginUserSucceed)(),
+    LoginUserFailed: csa(UserActionTypes.LoginUserFailed)<IErrorPayload>(),
+    Logout: csa(UserActionTypes.Logout)(),
+    LogoutSucceed: csa(UserActionTypes.LogoutSucceed)(),
+    LogoutFailed: csa(UserActionTypes.LogoutFailed)<IErrorPayload>(),
     RegisterUser: csa(UserActionTypes.RegisterUser)<IRegisterUserPayload>(),
     RegisterUserSucceed: csa(UserActionTypes.RegisterUserSucceed)(),
     RegisterUserFailed: csa(UserActionTypes.RegisterUserFailed)<IErrorPayload>(),
-    Logout: csa(UserActionTypes.Logout)(),
 };

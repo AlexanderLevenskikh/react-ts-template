@@ -1,11 +1,11 @@
 import {IAccountApi} from "root/api/interface/account";
 import {
-    ILoginEventDto,
+    ILoginEventDto, IRegistrationEventDto,
     ISendCurrentUserActivationDto,
     ISendUserActivationDto,
     ISessionInfoDto,
     IUserDto
-} from "root/api/dto/account";
+} from 'root/api/dto/account';
 import {delay} from "root/shared/utils/delay";
 import {AccountFakeDataService} from "root/api/fake/account/service/account";
 
@@ -14,6 +14,12 @@ export class AccountFakeApi implements IAccountApi {
         await delay();
 
         return AccountFakeDataService.login(event);
+    }
+
+    async register(event: IRegistrationEventDto): Promise<ISessionInfoDto> {
+        await delay();
+
+        return AccountFakeDataService.register(event);
     }
 
     async logout(token: string[]): Promise<any> {

@@ -1,106 +1,93 @@
 import { ActionType } from 'typesafe-actions';
-import { UserState } from 'root/user/state';
 import { UserActions, UserActionTypes } from 'root/user/actions';
+import { UserState } from 'root/user/state';
 
 export const initialState = new UserState();
 type ReducerActions = ActionType<typeof UserActions>;
 
 export const userReducer = (state = initialState, action: ReducerActions): UserState => {
     switch (action.type) {
-        case UserActionTypes.FetchCurrentUser: {
+        case UserActionTypes.GetUser: {
             return {
                 ...state,
                 userLoading: true,
             };
         }
-        case UserActionTypes.FetchCurrentUserSucceed: {
-            const { user } = action.payload;
+        case UserActionTypes.GetUserSucceed: {
+            const { view } = action.payload;
 
             return {
                 ...state,
                 userLoading: false,
-                user,
+                userView: view,
             }
         }
 
-        case UserActionTypes.FetchCurrentUserFailed:  {
+        case UserActionTypes.GetUserFailed:  {
             return {
                 ...state,
                 userLoading: false,
             }
         }
 
-        case UserActionTypes.OpenUsersListModal: {
+        case UserActionTypes.LoginUser: {
             return {
                 ...state,
-                usesListModalOpened: true,
+                loginProcessing: true,
             };
         }
-
-        case UserActionTypes.CloseUsersListModal: {
+        case UserActionTypes.LoginUserSucceed: {
             return {
                 ...state,
-                usesListModalOpened: false,
-            };
-        }
-
-        case UserActionTypes.FetchUsersList: {
-            return {
-                ...state,
-                usersListLoading: true,
-            };
-        }
-        case UserActionTypes.FetchUsersListSucceed: {
-            const { users } = action.payload;
-
-            return {
-                ...state,
-                usersListLoading: false,
-                usersList: users,
+                loginProcessing: false,
             }
         }
 
-        case UserActionTypes.FetchUsersListFailed:  {
+        case UserActionTypes.LoginUserFailed:  {
             return {
                 ...state,
-                usersListLoading: false,
+                loginProcessing: false,
             }
         }
 
-        case UserActionTypes.OpenUserRegistrationModal: {
+        case UserActionTypes.Logout: {
             return {
                 ...state,
-                registrationModalOpened: true,
+                logoutProcessing: true,
             };
         }
-
-        case UserActionTypes.CloseUserRegistrationModal: {
+        case UserActionTypes.LogoutSucceed: {
             return {
                 ...state,
-                registrationModalOpened: false,
-            };
+                logoutProcessing: false,
+            }
+        }
+
+        case UserActionTypes.LogoutFailed:  {
+            return {
+                ...state,
+                logoutProcessing: false,
+            }
         }
 
         case UserActionTypes.RegisterUser: {
             return {
                 ...state,
-                registrationLoading: true,
-                registrationLoadError: false,
+                registrationProcessing: true,
             };
         }
 
         case UserActionTypes.RegisterUserSucceed: {
             return {
                 ...state,
-                registrationLoading: false,
+                registrationProcessing: false,
             }
         }
 
         case UserActionTypes.RegisterUserFailed:  {
             return {
                 ...state,
-                registrationLoading: false,
-                registrationLoadError: true,
+                registrationProcessing: false,
             }
         }
 

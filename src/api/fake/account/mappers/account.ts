@@ -1,5 +1,6 @@
 import {IUserFakeDataEntity} from "root/api/fake/account/entity/user";
-import {IUserDto} from "root/api/dto/account";
+import { IRegistrationEventDto, IUserDto } from 'root/api/dto/account';
+import uuid from 'uuid';
 
 export class AccountFakeDataMappers {
     public static mapUserEntityToDto(entity: IUserFakeDataEntity): IUserDto {
@@ -20,6 +21,22 @@ export class AccountFakeDataMappers {
             isAdmin,
             isSuperAdmin,
             lastLoggedIn,
+        }
+    }
+
+    public static mapRegistrationEventToUser(event: IRegistrationEventDto): IUserFakeDataEntity {
+        return {
+            id: uuid.v1(),
+            email: event.email,
+            displayName: event.shortName,
+            firstName: event.firstName,
+            lastName: event.secondName,
+            middleName: event.surname,
+            isAdmin: false,
+            isActive: false,
+            isSuperAdmin: false,
+            lastLoggedIn: '',
+            password: event.password,
         }
     }
 }

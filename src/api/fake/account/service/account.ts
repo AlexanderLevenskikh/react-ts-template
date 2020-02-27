@@ -1,9 +1,10 @@
-import {ILoginEventDto, ISessionInfoDto, IUserDto} from "root/api/dto/account";
+import { ILoginEventDto, IRegistrationEventDto, ISessionInfoDto, IUserDto } from 'root/api/dto/account';
 import {UserFakeDataProvider} from "root/api/fake/account/provider/user";
 import {UnauthorizedError} from "root/shared/model/errors/unauthorizedError";
 import {AccountFakeDataMappers} from "root/api/fake/account/mappers/account";
 import {IUserFakeDataEntity} from "root/api/fake/account/entity/user";
 import {Nullable} from "root/shared/types/nullable";
+import { ForbiddenError } from 'root/shared/model/errors/forbiddenError';
 
 let loggedUserId: Nullable<string> = null;
 
@@ -16,6 +17,31 @@ export class AccountFakeDataService {
         }
 
         loggedUserId = event.userIdentifier;
+
+        return {
+            user: AccountFakeDataMappers.mapUserEntityToDto(user),
+            tokenResource: {
+                accessToken: 'accessToken',
+                refreshToken: 'refreshToken',
+            },
+            roles: [],
+        }
+    }
+
+    public static register(event: IRegistrationEventDto): ISessionInfoDto {
+        const users = UserFakeDataProvider.getUsers();
+        const hasUserWithSameLogin = users.some(user => event.email === user.email);
+
+        if (hasUserWithSameLogin) {
+            throw new ForbiddenError({ message: 'User with same email already exists' });
+        }
+
+        if (event.password !== event.confirmPassword) {
+            throw new ForbiddenError({ message: 'Password and it\'s confirmation are not same' });
+        }
+
+        const user = AccountFakeDataMappers.mapRegistrationEventToUser(event);
+        UserFakeDataProvider.createUser(user);
 
         return {
             user: AccountFakeDataMappers.mapUserEntityToDto(user),
