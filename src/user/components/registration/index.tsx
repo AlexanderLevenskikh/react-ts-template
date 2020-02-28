@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Radio } from 'antd';
 import { useUserRegistrationForm } from 'root/user/components/registration/hook';
 import { registrationFormValidationRules } from 'root/user/components/registration/validations';
 import styles from './styles.less';
+import { CompanyType } from 'root/api/dto/account';
 
 export const UserRegistrationForm: FC = () => {
     const { loading, register } = useUserRegistrationForm();
@@ -101,6 +102,16 @@ export const UserRegistrationForm: FC = () => {
                 validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
                 <Input placeholder='ИНН Организации'/>
+            </Form.Item>
+            <Form.Item
+                name="companyType"
+                rules={ registrationFormValidationRules.companyType }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
+            >
+                <Radio.Group defaultValue={ CompanyType.SellerBuyer }>
+                    <Radio value={ CompanyType.SellerBuyer }>Я поставщик/покупатель</Radio>
+                    <Radio value={ CompanyType.Bank }>Я банк</Radio>
+                </Radio.Group>
             </Form.Item>
             <Form.Item>
                 <Button

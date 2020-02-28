@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import styles from './styles.less';
 import { useUserLoginForm } from 'root/user/components/login/hook';
+import { registrationFormValidationRules } from 'root/user/components/registration/validations';
+import { loginFormValidationRules } from 'root/user/components/login/validations';
 
 export const UserLoginForm: FC = () => {
     const { loading, login } = useUserLoginForm();
@@ -12,13 +15,33 @@ export const UserLoginForm: FC = () => {
 
     return (
         <Form onFinish={ handleSubmit } className={ styles.form }>
-            <Form.Item>
-                <Input placeholder='Электронная почта'/>
+            <Form.Item
+                name='email'
+                rules={ loginFormValidationRules.email }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
+            >
+                <Input
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    placeholder='Электронная почта'
+                    maxLength={ 50 }
+                />
             </Form.Item>
-            <Form.Item hasFeedback>
-                <Input.Password placeholder='Пароль'/>
+            <Form.Item
+                name='password'
+                hasFeedback
+                rules={ loginFormValidationRules.password }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
+            >
+                <Input.Password
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    placeholder='Пароль'
+                    minLength={ 8 }
+                />
             </Form.Item>
-            <Form.Item>
+            <Form.Item
+                name='rememberMe'
+                valuePropName="checked"
+            >
                 <Checkbox>
                     Оставаться в системе
                 </Checkbox>
