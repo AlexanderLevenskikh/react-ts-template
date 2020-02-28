@@ -16,15 +16,18 @@ export const UserRegistrationForm: FC = () => {
             <Form.Item
                 name='email'
                 rules={ registrationFormValidationRules.email }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
                 <Input
                     placeholder='Электронная почта'
+                    maxLength={ 50 }
                 />
             </Form.Item>
             <Form.Item
                 name='password'
                 hasFeedback
                 rules={ registrationFormValidationRules.password }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
                 <Input.Password
                     placeholder='Пароль'
@@ -35,6 +38,7 @@ export const UserRegistrationForm: FC = () => {
                 name='passwordConfirmation'
                 hasFeedback
                 rules={ registrationFormValidationRules.passwordConfirmation }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
                 <Input.Password
                     placeholder='Подтверждение пароля'
@@ -44,6 +48,7 @@ export const UserRegistrationForm: FC = () => {
             <Form.Item
                 name='lastName'
                 rules={ registrationFormValidationRules.lastName }
+                validateTrigger={ [ 'onSubmit' ] }
             >
                 <Input
                     placeholder='Фамилия'
@@ -52,8 +57,8 @@ export const UserRegistrationForm: FC = () => {
             </Form.Item>
             <Form.Item
                 name='firstName'
-                
                 rules={ registrationFormValidationRules.firstName }
+                validateTrigger={ [ 'onSubmit' ] }
             >
                 <Input
                     placeholder='Имя'
@@ -63,6 +68,7 @@ export const UserRegistrationForm: FC = () => {
             <Form.Item
                 name='middleName'
                 rules={ registrationFormValidationRules.middleName }
+                validateTrigger={ [ 'onSubmit' ] }
             >
                 <Input
                     placeholder='Отчество'
@@ -71,24 +77,28 @@ export const UserRegistrationForm: FC = () => {
             </Form.Item>
             <Form.Item
                 name='phoneNumber'
+                validateTrigger={ [ 'onBlur' ] }
             >
                 <Input placeholder='Номер телефона'/>
             </Form.Item>
             <Form.Item
                 name='shortName'
                 rules={ registrationFormValidationRules.shortName }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
                 <Input placeholder='Краткое наименование организации'/>
             </Form.Item>
             <Form.Item
                 name='fullName'
                 rules={ registrationFormValidationRules.fullName }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
                 <Input placeholder='Полное наименование организации'/>
             </Form.Item>
             <Form.Item
                 name='inn'
                 rules={ registrationFormValidationRules.inn }
+                validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
                 <Input placeholder='ИНН Организации'/>
             </Form.Item>

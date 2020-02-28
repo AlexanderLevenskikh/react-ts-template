@@ -6,6 +6,7 @@ export enum RegistrationFormValidation {
     emailRequired = 'Укажите адрес электронной почты',
     emailIsNotValid = 'Неверный формат адреса электронной почты',
     passwordConfirmationIsIncorrect = 'Пароли не совпадают',
+    incorrectInn = 'ИНН должен состоять из 10 или 12 цифр',
 }
 
 export const registrationFormValidationRules: ValidationRulesMap<IUserRegistrationModel> = {
@@ -69,6 +70,39 @@ export const registrationFormValidationRules: ValidationRulesMap<IUserRegistrati
             message: RegistrationFormValidation.required,
             whitespace: true,
             validateTrigger: 'onSubmit',
+        },
+    ],
+    shortName: [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+    ],
+    fullName: [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+    ],
+    inn: [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+        {
+            validator: (rule, value) => {
+                if (!value || (value.length === 10 || value.length === 12) && value.match(/^\d+$/)) {
+                    return Promise.resolve();
+                }
+                return Promise.reject(RegistrationFormValidation.incorrectInn);
+            },
+            validateTrigger: 'onBlur',
         },
     ],
 };
