@@ -18,6 +18,6 @@ export function createUserFakeDataStorage(): IUserFakeDataEntity[] {
             isActive: true,
             lastLoggedIn: (new Date()).toISOString(),
             password: 'sampleHash',
-        }
+        },
     ];
 }

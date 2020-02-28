@@ -6,6 +6,8 @@ import { message } from 'antd';
 import { mapUserDtoToView } from 'root/user/mappers/userDto';
 import { mapUserRegistrationModelToDto } from 'root/user/mappers/modelToRegistrationEvent';
 import { mapUserLoginModelToDto } from 'root/user/mappers/modelToLoginEvent';
+import { localStorageUserKey } from 'root/app/constants';
+import { ISessionInfoDto } from 'root/api/dto/account';
 
 export function* userSagaArray() {
     yield spawn(watchFetchCurrentUserSaga);
@@ -35,6 +37,7 @@ export function* watchUserLogoutSaga() {
 export function* userLogoutSaga() {
     const { accountApi } = (yield getContext('dependencies')) as IDependencies;
     // TODO Token
+    localStorage.removeItem(localStorageUserKey);
     yield call(accountApi.logout, [  ]);
 }
 
@@ -47,9 +50,9 @@ export function* userLoginSaga(action: PayloadAction<string, ILoginUserPayload>)
 
         const { accountApi } = (yield getContext('dependencies')) as IDependencies;
         const event = mapUserLoginModelToDto(model);
-        yield call(accountApi.login, event);
+        const sessionInfo: ISessionInfoDto = yield call(accountApi.login, event);
 
-        message.success('Пользователь зарегистрирован', 5);
+        localStorage.setItem(localStorageUserKey, sessionInfo.user.id);
         yield put(UserActions.LoginUserSucceed());
     } catch (error) {
         yield put(UserActions.LoginUserFailed({ error }));

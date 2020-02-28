@@ -40,6 +40,7 @@ export const userReducer = (state = initialState, action: ReducerActions): UserS
             return {
                 ...state,
                 loginProcessing: false,
+                userIsAuthenticated: true,
             }
         }
 
@@ -60,6 +61,7 @@ export const userReducer = (state = initialState, action: ReducerActions): UserS
             return {
                 ...state,
                 logoutProcessing: false,
+                userIsAuthenticated: false,
             }
         }
 
