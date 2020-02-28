@@ -1,6 +1,5 @@
-import { ValidationRule } from "antd/es/form";
-import { IUserRegistrationModel } from "root/user/types/registration";
-import { ValidationRulesMap } from "root/shared/types/validationRulesMap";
+import { IUserRegistrationModel } from 'root/user/types/registration';
+import { ValidationRulesMap } from 'root/shared/types/validationRulesMap';
 
 export enum RegistrationFormValidation {
     required = 'Заполните поле',
@@ -10,76 +9,66 @@ export enum RegistrationFormValidation {
 }
 
 export const registrationFormValidationRules: ValidationRulesMap<IUserRegistrationModel> = {
-    email: {
-        rules: [
-            {
-                required: true,
-                message: RegistrationFormValidation.emailRequired,
-                whitespace: true,
-            },
-            {
-                type: 'email',
-                message: RegistrationFormValidation.emailIsNotValid,
-            },
-        ],
-        validateTrigger: 'onBlur',
-    },
-    password: {
-        rules: [
-            {
-                required: true,
-                message: RegistrationFormValidation.required,
-                whitespace: true,
-            },
-        ],
-        validateTrigger: 'onBlur',
-    },
-    passwordConfirmation: {
-        rules: [
-            {
-                required: true,
-                message: RegistrationFormValidation.required,
-                whitespace: true,
-            },
-            {
-                validator: (rule, value, callback, source, options) => {
-                    if (value === source.password) {
-                        return Promise.resolve();
-                    }
-                    return Promise.reject(RegistrationFormValidation.passwordConfirmationIsIncorrect);
+    email: [
+        {
+            required: true,
+            message: RegistrationFormValidation.emailRequired,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+        {
+            type: 'email',
+            message: RegistrationFormValidation.emailIsNotValid,
+            validateTrigger: 'onBlur',
+        },
+    ],
+    password: [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+    ],
+    passwordConfirmation: [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+        ({ getFieldValue }) => ({
+            validator(rule, value) {
+                if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
                 }
-            }
-        ],
-        validateTrigger: 'onBlur',
-    },
-    firstName: {
-        rules: [
-            {
-                required: true,
-                message: RegistrationFormValidation.required,
-                whitespace: true,
+                return Promise.reject(RegistrationFormValidation.passwordConfirmationIsIncorrect);
             },
-        ],
-        validateTrigger: 'onBlur',
-    },
-    lastName: {
-        rules: [
-            {
-                required: true,
-                message: RegistrationFormValidation.required,
-                whitespace: true,
-            },
-        ],
-        validateTrigger: 'onBlur',
-    },
-    middleName: {
-        rules: [
-            {
-                required: true,
-                message: RegistrationFormValidation.required,
-                whitespace: true,
-            },
-        ],
-        validateTrigger: 'onBlur',
-    }
+            validateTrigger: 'onBlur',
+        }),
+    ],
+    firstName: [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+    ],
+    lastName:  [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+    ],
+    middleName: [
+        {
+            required: true,
+            message: RegistrationFormValidation.required,
+            whitespace: true,
+            validateTrigger: 'onSubmit',
+        },
+    ],
 };

@@ -1,3 +1,3 @@
-import { GetFieldDecoratorOptions } from "antd/es/form/Form";
+import { Rule } from 'antd/es/form';
 
-export type ValidationRulesMap<T> = { [ P in keyof Partial<T> ]: GetFieldDecoratorOptions };
+export type ValidationRulesMap<T> = { [ P in keyof Partial<T> ]: Rule[] };

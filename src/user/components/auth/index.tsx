@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import styles from './styles.less';
 import { Tabs } from 'antd';
-import { WrappedUserRegistrationForm } from 'root/user/components/registration';
-import { WrappedUserLoginForm } from 'root/user/components/login';
+import { UserRegistrationForm } from 'root/user/components/registration';
+import { UserLoginForm } from 'root/user/components/login';
 
 enum UserAuthTab {
     Login = 'Login',
@@ -28,10 +28,10 @@ const UserAuth: FC = () => {
                     tabBarGutter={ 20 }
                 >
                     <TabPane tab='Вход' key={ UserAuthTab.Login }>
-                        <WrappedUserLoginForm/>
+                        <UserLoginForm/>
                     </TabPane>
                     <TabPane tab='Регистрация' key={ UserAuthTab.Registration }>
-                        <WrappedUserRegistrationForm />
+                        <UserRegistrationForm />
                     </TabPane>
                 </Tabs>
             </nav>

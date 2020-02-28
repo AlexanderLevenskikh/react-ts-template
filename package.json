@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/AlexanderLevenskikh/react-ts-template#readme",
   "dependencies": {
-    "antd": "^3.26.12",
+    "antd": "^4.0.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.4",
     "qs": "^6.9.1",
