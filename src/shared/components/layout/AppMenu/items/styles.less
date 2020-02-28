@@ -1,0 +1,45 @@
+@import '~root/shared/variables';
+
+:local {
+    .menuItem {
+        position: relative;
+        display: block;
+        height: 80px;
+        padding: 5px 0 25px;
+        text-align: center;
+        text-decoration: none;
+        transition: opacity 250ms ease-out, background-color 250ms ease-out;
+
+        &:not(.menuItemActive):hover {
+            .logoWrapper {
+                background-color: rgba(0,0,0,.1);
+            }
+        }
+    }
+
+    .logoWrapper {
+        display: flex;
+        margin: auto;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: white;
+    }
+
+    .menuItemTitle {
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    .menuItemActive {
+        & svg {
+            fill: @main-color;
+        }
+
+        & .menuItemTitle {
+            color: @main-color;
+        }
+    }
+
+}

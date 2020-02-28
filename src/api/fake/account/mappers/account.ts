@@ -1,6 +1,6 @@
 import {IUserFakeDataEntity} from "root/api/fake/account/entity/user";
 import { IRegistrationEventDto, IUserDto } from 'root/api/dto/account';
-import v1 from 'uuid/v1';
+import { v1 } from "uuid";
 
 export class AccountFakeDataMappers {
     public static mapUserEntityToDto(entity: IUserFakeDataEntity): IUserDto {

@@ -35,10 +35,17 @@ export function* watchUserLogoutSaga() {
     yield takeLatest(UserActionTypes.Logout, userLogoutSaga);
 }
 export function* userLogoutSaga() {
-    const { accountApi } = (yield getContext('dependencies')) as IDependencies;
-    // TODO Token
-    localStorage.removeItem(localStorageUserKey);
-    yield call(accountApi.logout, [  ]);
+    try {
+        const { accountApi } = (yield getContext('dependencies')) as IDependencies;
+        // TODO Token
+        localStorage.removeItem(localStorageUserKey);
+        yield call(accountApi.logout, [  ]);
+
+        yield put(UserActions.LogoutSucceed());
+    } catch (error) {
+        yield put(UserActions.LogoutFailed({ error }));
+    }
+
 }
 
 export function* watchUserLoginSaga() {
