@@ -1,14 +1,16 @@
 import { call, getContext, put, spawn, takeLatest } from 'redux-saga/effects';
 import { IDependencies } from 'root/app/dependencies';
-import { IRegisterUserPayload, UserActions, UserActionTypes } from 'root/user/actions';
+import { ILoginUserPayload, IRegisterUserPayload, UserActions, UserActionTypes } from 'root/user/actions';
 import { PayloadAction } from 'typesafe-actions';
 import { message } from 'antd';
 import { mapUserDtoToView } from 'root/user/mappers/userDto';
 import { mapUserRegistrationModelToDto } from 'root/user/mappers/modelToRegistrationEvent';
+import { mapUserLoginModelToDto } from 'root/user/mappers/modelToLoginEvent';
 
 export function* userSagaArray() {
     yield spawn(watchFetchCurrentUserSaga);
     yield spawn(watchUserLogoutSaga);
+    yield spawn(watchUserLoginSaga);
     yield spawn(watchUserRegistrationSaga);
 }
 
@@ -36,6 +38,24 @@ export function* userLogoutSaga() {
     yield call(accountApi.logout, [  ]);
 }
 
+export function* watchUserLoginSaga() {
+    yield takeLatest(UserActionTypes.LoginUser, userLoginSaga);
+}
+export function* userLoginSaga(action: PayloadAction<string, ILoginUserPayload>) {
+    try {
+        const { payload: { model } } = action;
+
+        const { accountApi } = (yield getContext('dependencies')) as IDependencies;
+        const event = mapUserLoginModelToDto(model);
+        yield call(accountApi.login, event);
+
+        message.success('Пользователь зарегистрирован', 5);
+        yield put(UserActions.LoginUserSucceed());
+    } catch (error) {
+        yield put(UserActions.LoginUserFailed({ error }));
+    }
+}
+
 export function* watchUserRegistrationSaga() {
     yield takeLatest(UserActionTypes.RegisterUser, userRegistrationSaga);
 }
@@ -52,5 +72,4 @@ export function* userRegistrationSaga(action: PayloadAction<string, IRegisterUse
     } catch (error) {
         yield put(UserActions.RegisterUserFailed({ error }));
     }
-
 }

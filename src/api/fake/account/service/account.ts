@@ -10,7 +10,7 @@ let loggedUserId: Nullable<string> = null;
 
 export class AccountFakeDataService {
     public static login(event: ILoginEventDto): ISessionInfoDto {
-        const user = UserFakeDataProvider.getUser(event.userIdentifier);
+        const user = UserFakeDataProvider.getUserByEmail(event.userIdentifier);
 
         if (user.password !== event.password) {
             throw new UnauthorizedError();

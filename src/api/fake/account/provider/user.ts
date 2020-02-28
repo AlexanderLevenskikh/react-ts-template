@@ -23,6 +23,16 @@ export class UserFakeDataProvider {
         return user;
     }
 
+    public static getUserByEmail(email: string): IUserFakeDataEntity {
+        const user = fakeDataStorage.user.find(user => user.email === email);
+
+        if (!user) {
+            throw new NotFoundError({ message: 'User not found' });
+        }
+
+        return user;
+    }
+
     public static createUser(entity: IUserFakeDataEntity): void {
         fakeDataStorage.user = [
             {
