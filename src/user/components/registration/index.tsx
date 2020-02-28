@@ -2,7 +2,10 @@ import React, { FC } from 'react';
 import { Button, Checkbox, Form, Icon, Input, Tooltip } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import { useUserRegistrationForm } from 'root/user/components/registration/hook';
-import { RegistrationFormValidation } from 'root/user/components/registration/validations';
+import {
+    RegistrationFormValidation,
+    registrationFormValidationRules
+} from 'root/user/components/registration/validations';
 import styles from './styles.less';
 
 interface IProps {
@@ -35,45 +38,56 @@ export const UserRegistrationForm: FC<IProps & FormComponentProps> = ({ form }) 
     return (
         <Form { ...formItemLayout } onSubmit={ handleSubmit } className={ styles.form }>
             <Form.Item className={ styles.row }>
-                { getFieldDecorator('email', {
-                    rules: [{ required: true, message: RegistrationFormValidation.required, whitespace: true }],
-                })(
-                    <Input className={ styles.control } placeholder='Электронная почта'/>
+                { getFieldDecorator('email', registrationFormValidationRules.email)(
+                    <Input
+                        className={ styles.control }
+                        placeholder='Электронная почта'
+                    />
                 ) }
             </Form.Item>
             <Form.Item hasFeedback className={ styles.row }>
-                { getFieldDecorator('password', {
-                    rules: [{ required: true, message: RegistrationFormValidation.required } ],
-                })(
-                    <Input.Password className={ styles.control } placeholder='Пароль'/>
+                { getFieldDecorator('password', registrationFormValidationRules.password)(
+                    <Input.Password
+                        className={ styles.control }
+                        placeholder='Пароль'
+                        minLength={ 8 }
+                    />
                 ) }
             </Form.Item>
             <Form.Item hasFeedback className={ styles.row }>
-                { getFieldDecorator('passwordConfirmation', {
-                    rules: [{ required: true, message: RegistrationFormValidation.required } ],
-                })(
-                    <Input.Password className={ styles.control } placeholder='Подтверждение пароля'/>
+                { getFieldDecorator('passwordConfirmation', registrationFormValidationRules.passwordConfirmation)(
+                    <Input.Password
+                        className={ styles.control }
+                        placeholder='Подтверждение пароля'
+                        minLength={ 8 }
+                    />
                 ) }
             </Form.Item>
             <Form.Item className={ styles.row }>
-                { getFieldDecorator('lastName', {
-                    rules: [{ required: true, message: RegistrationFormValidation.required } ],
-                })(
-                    <Input className={ styles.control } placeholder='Фамилия'/>
+                { getFieldDecorator('lastName', registrationFormValidationRules.lastName)(
+                    <Input
+                        className={ styles.control }
+                        placeholder='Фамилия'
+                        maxLength={ 500 }
+                    />
                 ) }
             </Form.Item>
             <Form.Item className={ styles.row }>
-                { getFieldDecorator('firstName', {
-                    rules: [{ required: true, message: RegistrationFormValidation.required } ],
-                })(
-                    <Input className={ styles.control } placeholder='Имя'/>
+                { getFieldDecorator('firstName', registrationFormValidationRules.firstName)(
+                    <Input
+                        className={ styles.control }
+                        placeholder='Имя'
+                        maxLength={ 500 }
+                    />
                 ) }
             </Form.Item>
             <Form.Item className={ styles.row }>
-                { getFieldDecorator('middleName', {
-                    rules: [{ required: true, message: RegistrationFormValidation.required } ],
-                })(
-                    <Input className={ styles.control } placeholder='Отчество'/>
+                { getFieldDecorator('middleName', registrationFormValidationRules.middleName)(
+                    <Input
+                        className={ styles.control }
+                        placeholder='Отчество'
+                        maxLength={ 500 }
+                    />
                 ) }
             </Form.Item>
             <Form.Item className={ styles.row }>
