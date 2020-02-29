@@ -80,7 +80,12 @@ export const UserRegistrationForm: FC = () => {
                 name='phoneNumber'
                 validateTrigger={ [ 'onBlur' ] }
             >
-                <Input placeholder='Номер телефона'/>
+                <Input
+                    placeholder='Номер телефона'
+                    prefix='+'
+                    type='tel'
+                    maxLength={ 11 }
+                />
             </Form.Item>
             <Form.Item
                 name='shortName'
@@ -101,7 +106,10 @@ export const UserRegistrationForm: FC = () => {
                 rules={ registrationFormValidationRules.inn }
                 validateTrigger={ [ 'onSubmit', 'onBlur' ] }
             >
-                <Input placeholder='ИНН Организации'/>
+                <Input
+                    maxLength={ 12 }
+                    placeholder='ИНН Организации'
+                />
             </Form.Item>
             <Form.Item
                 name="companyType"

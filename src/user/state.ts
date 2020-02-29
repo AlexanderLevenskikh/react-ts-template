@@ -1,5 +1,5 @@
 import { UserView } from 'root/user/types/user';
-import { JwtUtils } from 'root/user/utils/jwt';
+import { JwtUtils } from 'root/shared/utils/jwt';
 
 export class UserState {
     userView: UserView = new UserView();

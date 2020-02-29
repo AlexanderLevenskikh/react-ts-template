@@ -1,11 +1,11 @@
 import { IMap } from 'root/shared/types/iMap';
-import { stringifyNonEmptyParams } from 'root/user/utils/httpClient/stringifyNonEmptyParams';
-import { objectToFormData } from 'root/user/utils/httpClient/objectToFormData';
+import { stringifyNonEmptyParams } from 'root/shared/utils/httpClient/stringifyNonEmptyParams';
+import { objectToFormData } from 'root/shared/utils/httpClient/objectToFormData';
 import { notEmpty } from 'root/shared/utils/notEmpty';
 import { FilePolyfill } from 'root/shared/utils/filePolyfill';
-import { handleError } from 'root/user/utils/httpClient/handleError';
+import { handleError } from 'root/shared/utils/httpClient/handleError';
 import { host } from 'root/app/constants';
-import { JwtUtils } from 'root/user/utils/jwt';
+import { JwtUtils } from 'root/shared/utils/jwt';
 
 export enum HttpClientMethod {
     GET = 'GET',

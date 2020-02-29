@@ -1,3 +1,3 @@
-export interface INotFoundBackendException {
+export interface INotFoundException {
     resourceType: any;
 }

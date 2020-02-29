@@ -4,7 +4,7 @@ export interface IResourceForbiddenExceptionError {
     field?: string;
 }
 
-export interface IResourceForbiddenException {
+export interface IForbiddenException {
     errors: IResourceForbiddenExceptionError[];
 }
 

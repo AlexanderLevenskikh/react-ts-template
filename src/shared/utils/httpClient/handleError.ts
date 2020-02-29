@@ -3,7 +3,7 @@ import { InternalServerError } from 'root/shared/errorCatcher/errors/internalSer
 import { GeneralResponseError } from 'root/shared/errorCatcher/errors/general';
 import { errorCatcher } from 'root/app/errorCatcher';
 import { ExceptionType } from 'root/shared/errorCatcher/backendExceptionType';
-import { ResponseStatus } from 'root/user/utils/httpClient/responseStatus';
+import { ResponseStatus } from 'root/shared/utils/httpClient/responseStatus';
 
 export async function handleError<T>(response: Response) {
     const responseLocation = response.headers.get('location');
@@ -31,6 +31,12 @@ export async function handleError<T>(response: Response) {
         case ResponseStatus.Status404NotFound:
             errorCatcher.tryCatch({
                 type: ExceptionType.ResourceNotFound,
+                payload: responseJson
+            });
+            break;
+        case ResponseStatus.Status422UnprocessableEntity:
+            errorCatcher.tryCatch({
+                type: ExceptionType.ValidationError,
                 payload: responseJson
             });
             break;

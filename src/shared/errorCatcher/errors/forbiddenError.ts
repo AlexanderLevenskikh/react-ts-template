@@ -1,4 +1,4 @@
-import { IResourceForbiddenExceptionError } from 'root/shared/errorCatcher/exceptions/resourceForbiddenException';
+import { IResourceForbiddenExceptionError } from 'root/shared/errorCatcher/exceptions/forbidden';
 
 export interface IForbiddenErrorArgs {
     errors: IResourceForbiddenExceptionError[];

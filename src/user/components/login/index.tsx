@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from './styles.less';
 import { useUserLoginForm } from 'root/user/components/login/hook';
-import { registrationFormValidationRules } from 'root/user/components/registration/validations';
 import { loginFormValidationRules } from 'root/user/components/login/validations';
 
 export const UserLoginForm: FC = () => {

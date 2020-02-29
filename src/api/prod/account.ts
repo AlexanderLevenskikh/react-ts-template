@@ -1,4 +1,4 @@
-import { httpClient, HttpClientMethod, HttpClientResponseType } from 'root/user/utils/httpClient';
+import { httpClient, HttpClientMethod, HttpClientResponseType } from 'root/shared/utils/httpClient';
 import { IAccountApi } from 'root/api/interface/account';
 import {
     ILoginEventDto,
