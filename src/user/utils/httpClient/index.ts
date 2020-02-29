@@ -1,9 +1,11 @@
 import { IMap } from 'root/shared/types/iMap';
-import { stringifyNonEmptyParams } from 'root/api/httpClient/stringifyNonEmptyParams';
-import { objectToFormData } from 'root/api/httpClient/objectToFormData';
+import { stringifyNonEmptyParams } from 'root/user/utils/httpClient/stringifyNonEmptyParams';
+import { objectToFormData } from 'root/user/utils/httpClient/objectToFormData';
 import { notEmpty } from 'root/shared/utils/notEmpty';
 import { FilePolyfill } from 'root/shared/utils/filePolyfill';
-import { handleError } from 'root/api/httpClient/handleError';
+import { handleError } from 'root/user/utils/httpClient/handleError';
+import { host } from 'root/app/constants';
+import { JwtUtils } from 'root/user/utils/jwt';
 
 export enum HttpClientMethod {
     GET = 'GET',
@@ -31,13 +33,20 @@ export interface IHttpClientOptions {
     method: HttpClientMethod;
     request: IHttpClientRequest;
     responseType: HttpClientResponseType;
+    allowAnonymous?: boolean;
 }
 
 export function createHttpClient<T>() {
     return async (options: IHttpClientOptions): Promise<any> => {
+        let sessionInfo = null;
+        if (!options.allowAnonymous) {
+            await JwtUtils.refreshTokenIfExpired();
+            sessionInfo = JwtUtils.getSessionInfo();
+        }
+
         const { request, responseType, method } = options;
 
-        let url = `/${ options.controller }/${ options.action }`;
+        let url = `${host}${ options.controller }/${ options.action }`;
         if (request.query) {
             url = `${ url }${ stringifyNonEmptyParams(request.query) }`;
         }
@@ -51,6 +60,7 @@ export function createHttpClient<T>() {
                 'Cache-Control': 'no-cache, no-store, must-revalidate',
                 'Pragma': 'no-cache',
                 'Expires': '0',
+                ...(options.allowAnonymous || !sessionInfo ? {} : { 'Authorization': `Bearer ${sessionInfo.accessToken}` }),
             },
         };
 
@@ -128,5 +138,5 @@ async function parseJSON(response: Response): Promise<any> {
     const text = await response.text();
     const obj = text ? JSON.parse(text) : { };
 
-    return obj;
+    return obj.data;
 }

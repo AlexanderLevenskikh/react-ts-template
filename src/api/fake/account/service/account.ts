@@ -66,21 +66,4 @@ export class AccountFakeDataService {
 
         return AccountFakeDataMappers.mapUserEntityToDto(user);
     }
-
-    public static refreshToken(token: string[]): ISessionInfoDto {
-        if (!loggedUserId) {
-            throw new UnauthorizedError();
-        }
-
-        const user = UserFakeDataProvider.getUser(loggedUserId);
-
-        return {
-            user: AccountFakeDataMappers.mapUserEntityToDto(user),
-            tokenResource: {
-                accessToken: 'accessToken',
-                refreshToken: 'refreshToken',
-            },
-            roles: [],
-        }
-    }
 }

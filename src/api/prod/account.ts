@@ -1,10 +1,12 @@
-import { httpClient, HttpClientMethod, HttpClientResponseType } from 'root/api/httpClient';
+import { httpClient, HttpClientMethod, HttpClientResponseType } from 'root/user/utils/httpClient';
 import { IAccountApi } from 'root/api/interface/account';
 import {
-    ILoginEventDto, IRegistrationEventDto,
+    ILoginEventDto,
+    IRegistrationEventDto,
     ISendCurrentUserActivationDto,
     ISendUserActivationDto,
     ISessionInfoDto,
+    ITokenResourceDto,
     IUserDto
 } from 'root/api/dto/account';
 
@@ -18,6 +20,7 @@ export class AccountApi implements IAccountApi {
                 body: event,
             },
             responseType: HttpClientResponseType.JSON,
+            allowAnonymous: true,
         });
     }
 
@@ -30,10 +33,11 @@ export class AccountApi implements IAccountApi {
                 body: event,
             },
             responseType: HttpClientResponseType.JSON,
+            allowAnonymous: true,
         });
     }
 
-    logout(token: string[]): Promise<any> {
+    logout(token: ITokenResourceDto): Promise<any> {
         return httpClient({
             controller: '/api/user-account',
             action: 'logout',
@@ -42,6 +46,7 @@ export class AccountApi implements IAccountApi {
                 body: token,
             },
             responseType: HttpClientResponseType.JSON,
+            allowAnonymous: true,
         });
     }
 
@@ -55,27 +60,16 @@ export class AccountApi implements IAccountApi {
         });
     }
 
-    refreshToken(token: string[]): Promise<ISessionInfoDto> {
-        return httpClient({
-            controller: '/api/user-account/token',
-            action: 'refresh',
-            method: HttpClientMethod.POST,
-            request: {
-                body: token,
-            },
-            responseType: HttpClientResponseType.JSON,
-        });
-    }
-
     sendUserActivation(event: ISendUserActivationDto): Promise<any> {
         return httpClient({
             controller: '/api/user-account',
-            action: 'send-activation',
+            action: 'send-activation-email',
             method: HttpClientMethod.POST,
             request: {
                 body: event,
             },
             responseType: HttpClientResponseType.JSON,
+            allowAnonymous: true,
         });
     }
 
@@ -88,6 +82,7 @@ export class AccountApi implements IAccountApi {
                 body: event,
             },
             responseType: HttpClientResponseType.JSON,
+            allowAnonymous: true,
         });
     }
 }

@@ -1,10 +1,10 @@
 import { UserView } from 'root/user/types/user';
-import { localStorageUserKey } from 'root/app/constants';
+import { JwtUtils } from 'root/user/utils/jwt';
 
 export class UserState {
     userView: UserView = new UserView();
     userLoading: boolean = false;
-    userIsAuthenticated: boolean = Boolean(localStorage.getItem(localStorageUserKey));
+    userIsAuthenticated: boolean = JwtUtils.isAuthenticated();
 
     loginProcessing: boolean = false;
     registrationProcessing: boolean = false;

@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 let config: IConfig = {
-    isProdApi: false,
+    isProdApi: true,
 };
 
 // TODO разобраться почему это не работает

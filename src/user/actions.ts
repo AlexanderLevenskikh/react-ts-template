@@ -16,6 +16,10 @@ export interface IRegisterUserPayload {
     model: IUserRegistrationModel;
 }
 
+export interface ISendEmailActivationPayload {
+    email: string;
+}
+
 export enum UserActionTypes {
     GetUser = 'user/get',
     GetUserSucceed = 'user/get/succeed',
@@ -29,6 +33,9 @@ export enum UserActionTypes {
     RegisterUser = 'user/registration',
     RegisterUserSucceed = 'user/registration/succeed',
     RegisterUserFailed = 'user/registration/failed',
+    SendEmailActivation = 'user/activation',
+    SendEmailActivationSucceed = 'user/activation/succeed',
+    SendEmailActivationFailed = 'user/activation/failed',
 }
 
 export const UserActions = {
@@ -44,4 +51,7 @@ export const UserActions = {
     RegisterUser: csa(UserActionTypes.RegisterUser)<IRegisterUserPayload>(),
     RegisterUserSucceed: csa(UserActionTypes.RegisterUserSucceed)(),
     RegisterUserFailed: csa(UserActionTypes.RegisterUserFailed)<IErrorPayload>(),
+    SendEmailActivation: csa(UserActionTypes.SendEmailActivation)<ISendEmailActivationPayload>(),
+    SendEmailActivationSucceed: csa(UserActionTypes.SendEmailActivationSucceed)(),
+    SendEmailActivationFailed: csa(UserActionTypes.SendEmailActivationFailed)<IErrorPayload>(),
 };

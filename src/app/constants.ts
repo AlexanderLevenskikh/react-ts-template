@@ -1,1 +1,1 @@
-export const localStorageUserKey = 'react-ts-template-user';
+export const host = 'http://localhost:5000';
