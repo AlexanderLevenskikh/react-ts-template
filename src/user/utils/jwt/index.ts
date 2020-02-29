@@ -1,6 +1,6 @@
 import { ISessionInfoDto, ITokenResourceDto } from 'root/api/dto/account';
 import { httpClient, HttpClientMethod, HttpClientResponseType } from 'root/user/utils/httpClient';
-import { UnauthorizedError } from 'root/shared/model/errors/unauthorizedError';
+import { UnauthorizedError } from 'root/shared/errorCatcher/errors/unauthorizedError';
 
 export interface IStorageSessionInfo extends ITokenResourceDto {
     accessTokenExpiresAt: number;

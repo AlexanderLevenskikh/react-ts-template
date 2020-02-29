@@ -1,4 +1,4 @@
-import { SearchParamsModel } from 'root/shared/model/searchParams';
+import { SearchParamsModel } from 'root/shared/types/searchParams';
 import { querySerializer } from 'root/shared/utils/querySerializer';
 
 export function areQueryParamsEqual(first: SearchParamsModel, second: SearchParamsModel) {

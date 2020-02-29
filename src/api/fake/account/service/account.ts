@@ -1,10 +1,10 @@
 import { ILoginEventDto, IRegistrationEventDto, ISessionInfoDto, IUserDto } from 'root/api/dto/account';
 import {UserFakeDataProvider} from "root/api/fake/account/provider/user";
-import {UnauthorizedError} from "root/shared/model/errors/unauthorizedError";
+import {UnauthorizedError} from "root/shared/errorCatcher/errors/unauthorizedError";
 import {AccountFakeDataMappers} from "root/api/fake/account/mappers/account";
 import {IUserFakeDataEntity} from "root/api/fake/account/entity/user";
 import {Nullable} from "root/shared/types/nullable";
-import { ForbiddenError } from 'root/shared/model/errors/forbiddenError';
+import { ForbiddenError } from 'root/shared/errorCatcher/errors/forbiddenError';
 
 let loggedUserId: Nullable<string> = null;
 

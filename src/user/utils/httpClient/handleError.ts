@@ -1,8 +1,9 @@
-import { UnauthorizedError } from 'root/shared/model/errors/unauthorizedError';
-import { InternalServerError } from 'root/shared/model/errors/internalServerError';
-import { GeneralResponseError } from 'root/shared/model/errors/general';
-import { ForbiddenError } from 'root/shared/model/errors/forbiddenError';
-import { NotFoundError } from 'root/shared/model/errors/notFoundError';
+import { UnauthorizedError } from 'root/shared/errorCatcher/errors/unauthorizedError';
+import { InternalServerError } from 'root/shared/errorCatcher/errors/internalServerError';
+import { GeneralResponseError } from 'root/shared/errorCatcher/errors/general';
+import { errorCatcher } from 'root/app/errorCatcher';
+import { ExceptionType } from 'root/shared/errorCatcher/backendExceptionType';
+import { ResponseStatus } from 'root/user/utils/httpClient/responseStatus';
 
 export async function handleError<T>(response: Response) {
     const responseLocation = response.headers.get('location');
@@ -11,12 +12,30 @@ export async function handleError<T>(response: Response) {
         throw new UnauthorizedError();
     }
 
+    if (response.status === ResponseStatus.Status401Unauthorized) {
+        throw new UnauthorizedError();
+    }
+
+    const responseJson = await response.json();
+    if (!(responseJson && typeof responseJson === 'object')) {
+        throw new GeneralResponseError();
+    }
+
     switch (response.status) {
-        case 403:
-            throw new ForbiddenError({ });
-        case 404:
-            throw new NotFoundError({ });
-        case 500:
+        case ResponseStatus.Status403Forbidden:
+            errorCatcher.tryCatch({
+                type: ExceptionType.ResourceForbidden,
+                payload: responseJson
+            });
+            break;
+        case ResponseStatus.Status404NotFound:
+            errorCatcher.tryCatch({
+                type: ExceptionType.ResourceNotFound,
+                payload: responseJson
+            });
+            break;
+        case ResponseStatus.Status500InternalServerError:
+        case ResponseStatus.Status503ServiceUnavailable:
             throw new InternalServerError();
         default:
             throw new GeneralResponseError();

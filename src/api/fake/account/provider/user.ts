@@ -1,7 +1,7 @@
 import {IUserFakeDataEntity} from "root/api/fake/account/entity/user";
 import {fakeDataStorage} from "root/api/fake/storage";
 import {Nullable} from "root/shared/types/nullable";
-import {NotFoundError} from "root/shared/model/errors/notFoundError";
+import {NotFoundError} from "root/shared/errorCatcher/errors/notFoundError";
 import { v1 } from "uuid";
 
 export class UserFakeDataProvider {

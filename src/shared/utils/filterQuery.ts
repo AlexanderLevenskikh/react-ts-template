@@ -1,4 +1,4 @@
-import { SearchParamsModel } from 'root/shared/model/searchParams';
+import { SearchParamsModel } from 'root/shared/types/searchParams';
 
 export function filterQuery(query: SearchParamsModel): SearchParamsModel {
     const baseQuery: SearchParamsModel = {
